@@ -1,0 +1,15 @@
+{
+    "name": "wit_soft/composer",
+    "description": "Sevidor para ser consumido com totem de auto atendimento",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Renato Oliveira",
+            "email": "renato@witcare.com.br"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "rain/raintpl": ">=3.0.0"
+    }
+}

@@ -1,31 +1,41 @@
 <?php
-$texto_teste = "O dia. está lindo.";
-$path = explode("/", $_GET['path']);
-$contents = file_get_contents('db.json');
+require_once('vendor/autoload.php');
 
-$json = json_decode($contents, TRUE);
+// namespace
+use Rain\Tpl;
 
-$method = $_SERVER['REQUEST_METHOD'];
+$app = new \Slim\Slim();
 
-header('Content-type: application/json');
-$body = file_get_contents('php://input');
+// config
+$config = array(
+    "tpl_dir"       => "tpl/",
+    "cache_dir"     => "cache/"
+    //"debug"         => true, // set to false to improve the speed
+);
 
-if($method === 'GET'){
-    if( $json[$path[0]] ){
-        echo( json_encode($json[$path[0]]) );
-    }else{
-        echo '[]';
-    }
-}
+Tpl::configure( $config );
 
-if( $method === 'POST' ){
-    $jsonBody = json_decode($body, true);
-    $jsonBody['id'] = time();
-    if( !$json[$path[0]] ){
-        $json[$path[0]] = [];
-    }    
-    $json[$path[0]][] = $jsonBody;
-    echo( json_encode($jsonBody) );
-    file_put_contents('db.json', json_encode($json));
+$app->get('/', function(){
+// create the Tpl object
+$tpl = new Tpl;
+// assign a variable
+$tpl->assign( "name", "Renato Oliveira!!" );
+$tpl->assign( "version", PHP_VERSION );
+// assign an array
+//$tpl->assign( "week", array( "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" ) );
 
-}
+// draw the template
+$tpl->draw( "index" );
+
+});
+
+$app->get('/teste', function(){
+    // create the Tpl object
+$tpl = new Tpl;
+// assign a variable
+$tpl->assign( "name", "Katia Cilene." );
+// draw the template
+$tpl->draw( "teste" );
+});
+
+$app->run();

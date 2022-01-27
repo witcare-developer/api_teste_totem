@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b9569cf871502ca57c2540dee80ffd8e",
+    "content-hash": "e8502dde2467cd6da522ae9428a6c842",
     "packages": [
         {
             "name": "rain/raintpl",

@@ -1,5 +1,4 @@
 <?php
-$texto_teste = "O dia. está lindo.";
 $path = explode("/", $_GET['path']);
 $contents = file_get_contents('db.json');
 

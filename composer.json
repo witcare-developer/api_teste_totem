@@ -11,6 +11,6 @@
     "minimum-stability": "dev",
     "require": {
         "rain/raintpl": ">=3.0.0",
-        "slim/slim": "2.0"
+        "slim/slim": "2.0.0"
     }
 }

@@ -32,6 +32,25 @@ $app->post('/salvar', function() {
     echo '<pre>';
     if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {
         echo "Arquivo válido e enviado com sucesso.\n";
+            //-----
+            $contents = file_get_contents('db.json');
+            $json = json_decode($contents, TRUE);
+            header('Content-type: application/json');
+            $body = file_get_contents('php://input');
+
+            $jsonBody = json_decode($body, true);
+            $jsonBody['id'] = time();
+
+            $jsonBody['nome_produto'] = $_POST['nome_produto'];
+            $jsonBody['valor_produto'] = $_POST['valor_produto'];
+            $jsonBody['link_imagem'] = 'image/' . $_FILES['userfile']['name'];
+            if( !$json['produtos'] ){
+                $json['produtos'] = [];
+            }    
+            $json['produtos'][] = $jsonBody;
+            echo( json_encode($jsonBody) );
+            file_put_contents('db.json', json_encode($json));
+            //-------
     } else {
         echo "Possível ataque de upload de arquivo!\n";
     }
@@ -39,29 +58,6 @@ $app->post('/salvar', function() {
     echo 'Aqui está mais informações de debug:';
     print_r($_FILES);
     print_r($_POST);
-
-    //-----
-
-    $contents = file_get_contents('db.json');
-    $json = json_decode($contents, TRUE);
-    header('Content-type: application/json');
-    $body = file_get_contents('php://input');
-
-    $jsonBody = json_decode($body, true);
-    $jsonBody['id'] = time();
-
-    $jsonBody['nome_produto'] = $_POST['nome_produto'];
-    $jsonBody['valor_produto'] = $_POST['valor_produto'];
-    $jsonBody['link_imagem'] = 'image/' . $_FILES['userfile']['name'];
-    if( !$json['produtos'] ){
-        $json['produtos'] = [];
-    }    
-    $json['produtos'][] = $jsonBody;
-    echo( json_encode($jsonBody) );
-    file_put_contents('db.json', json_encode($json));
-
-    //-------
-    
 
     print "</pre>";
 
